@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Schermata Iniziale Xbox</title>
+    <title>Schermata Iniziale Xbox - Avanzata</title>
     <style>
         /* Reset CSS */
         * {
@@ -18,54 +18,94 @@
             background-color: #0a0a0a;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow: hidden;
+            position: relative;
         }
 
-        /* Accensione */
-        #power-on {
+        /* Sfondo e Nucleo Pulsante */
+        #background {
             position: absolute;
             width: 100%;
             height: 100%;
             background-color: #0a0a0a;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            animation: fadeOut 3s forwards;
-            animation-delay: 5s; /* Durata dell'accensione */
+            overflow: hidden;
         }
 
-        @keyframes fadeOut {
-            0% { opacity: 1; }
-            100% { opacity: 0; visibility: hidden; }
+        /* Nebbia e Fumo */
+        .fog {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: radial-gradient(circle, rgba(0,255,0,0.2) 0%, rgba(0,255,0,0) 70%);
+            filter: blur(50px);
+            opacity: 0.3;
+            animation: moveFog 60s linear infinite;
         }
 
-        .glow-effect {
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, rgba(0,255,0,1) 0%, rgba(0,255,0,0) 70%);
-            animation: pulse 2s infinite;
+        @keyframes moveFog {
+            0% { transform: translate(0, 0); }
+            50% { transform: translate(50px, 50px); }
+            100% { transform: translate(0, 0); }
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.2); opacity: 0.7; }
-        }
-
-        /* Logo Xbox */
-        #logo {
+        /* Nucleo Pulsante */
+        .nucleo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
             width: 150px;
             height: 150px;
-            background: url('https://upload.wikimedia.org/wikipedia/commons/4/43/Xbox_logo_2012.svg') no-repeat center center;
-            background-size: contain;
-            opacity: 0;
-            animation: logoAppear 2s forwards;
-            animation-delay: 1s;
-            filter: drop-shadow(0 0 20px #00ff00);
+            background: radial-gradient(circle, #00ff00 0%, rgba(0,255,0,0) 70%);
+            border-radius: 50%;
+            box-shadow: 0 0 20px #00ff00, 0 0 40px #00ff00, 0 0 60px #00ff00;
+            transform: translate(-50%, -50%);
+            animation: pulsate 2s infinite;
         }
 
-        @keyframes logoAppear {
-            0% { opacity: 0; transform: scale(0.5); }
-            100% { opacity: 1; transform: scale(1); }
+        @keyframes pulsate {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+                box-shadow: 0 0 20px #00ff00, 0 0 40px #00ff00, 0 0 60px #00ff00;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.2);
+                box-shadow: 0 0 30px #00ff00, 0 0 60px #00ff00, 0 0 90px #00ff00;
+            }
+        }
+
+        /* Anelli Orbitanti */
+        .orbit {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            border: 2px solid rgba(0,255,0,0.5);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: rotateOrbit 10s linear infinite;
+        }
+
+        .orbit:nth-child(2) {
+            width: 300px;
+            height: 300px;
+            animation-duration: 15s;
+        }
+
+        .orbit:nth-child(3) {
+            width: 450px;
+            height: 450px;
+            animation-duration: 20s;
+        }
+
+        .orbit:nth-child(4) {
+            width: 600px;
+            height: 600px;
+            animation-duration: 25s;
+        }
+
+        @keyframes rotateOrbit {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
         }
 
         /* Menu Principale */
@@ -78,7 +118,7 @@
             text-align: center;
             opacity: 0;
             animation: menuFadeIn 2s forwards;
-            animation-delay: 6s; /* Dopo l'accensione */
+            animation-delay: 7s; /* Dopo l'accensione e le animazioni iniziali */
         }
 
         @keyframes menuFadeIn {
@@ -134,7 +174,7 @@
         .settings-icon { background-image: url('https://img.icons8.com/ios-filled/50/00ff00/settings.png'); }
         .live-icon { background-image: url('https://img.icons8.com/ios-filled/50/00ff00/globe.png'); }
 
-        /* Indicatori di stato */
+        /* Indicatori di Stato */
         #status {
             position: absolute;
             bottom: 20px;
@@ -158,9 +198,76 @@
             0%, 100% { transform: scale(1); opacity: 1; }
             50% { transform: scale(1.2); opacity: 0.7; }
         }
+
+        /* Sequenza di Accensione */
+        #power-on {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: #0a0a0a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            animation: fadeOut 5s forwards;
+            animation-delay: 5s; /* Durata dell'accensione */
+            z-index: 10;
+        }
+
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            100% { opacity: 0; visibility: hidden; }
+        }
+
+        .glow-effect {
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(0,255,0,1) 0%, rgba(0,255,0,0) 70%);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+        }
+
+        /* Logo Xbox */
+        #logo {
+            width: 150px;
+            height: 150px;
+            background: url('https://upload.wikimedia.org/wikipedia/commons/8/8c/XBOX_logo_2012.svg') no-repeat center center;
+            background-size: contain;
+            opacity: 0;
+            animation: logoAppear 2s forwards;
+            animation-delay: 1s;
+            filter: drop-shadow(0 0 20px #00ff00);
+        }
+
+        @keyframes logoAppear {
+            0% { opacity: 0; transform: scale(0.5); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
     </style>
 </head>
 <body>
+
+    <!-- Sfondo e Effetti Aggiuntivi -->
+    <div id="background">
+        <!-- Nebbia e Fumo -->
+        <div class="fog"></div>
+        <div class="fog" style="animation-delay: 20s; opacity: 0.2;"></div>
+        <div class="fog" style="animation-delay: 40s; opacity: 0.25;"></div>
+
+        <!-- Nucleo Pulsante -->
+        <div class="nucleo"></div>
+
+        <!-- Anelli Orbitanti -->
+        <div class="orbit"></div>
+        <div class="orbit"></div>
+        <div class="orbit"></div>
+        <div class="orbit"></div>
+    </div>
 
     <!-- Sequenza di Accensione -->
     <div id="power-on">
@@ -213,6 +320,25 @@
                 // Puoi aggiungere ulteriori azioni qui, come navigare a una nuova pagina
             });
         });
+
+        // Variabilità dell'intensità del nucleo con JavaScript
+        const nucleo = document.querySelector('.nucleo');
+        let scale = 1;
+        let growing = true;
+
+        function pulsateNucleo() {
+            if (growing) {
+                scale += 0.005;
+                if (scale >= 1.2) growing = false;
+            } else {
+                scale -= 0.005;
+                if (scale <= 1) growing = true;
+            }
+            nucleo.style.transform = `translate(-50%, -50%) scale(${scale})`;
+            requestAnimationFrame(pulsateNucleo);
+        }
+
+        pulsateNucleo();
     </script>
 </body>
 </html>
