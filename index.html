@@ -3,18 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu Stile Prima Xbox</title>
-    <!-- Font -->
+    <title>Xbox Menu</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
     <style>
-        /* Reset di base */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        /* Corpo della pagina */
         body {
             background-color: #0a0a0a;
             color: #00ff00;
@@ -23,34 +14,33 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            overflow: hidden;
         }
-
-        /* Container principale */
+        
         .container {
             text-align: center;
         }
-
-        /* Titolo */
+        
         .title {
             font-size: 4rem;
-            margin-bottom: 50px;
+            margin-bottom: 20px;
             text-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00;
             animation: glow 1.5s infinite alternate;
         }
-
-        /* Menu */
+        
         .menu {
             list-style: none;
+            padding: 0;
         }
-
+        
         .menu-item {
             font-size: 2rem;
-            padding: 15px 0;
+            padding: 10px 0;
             cursor: pointer;
-            transition: color 0.3s, transform 0.3s;
             position: relative;
+            transition: color 0.3s, transform 0.3s;
         }
-
+        
         .menu-item::after {
             content: '';
             display: block;
@@ -60,17 +50,16 @@
             transition: width 0.3s;
             margin: auto;
         }
-
+        
         .menu-item:hover::after, .menu-item.selected::after {
             width: 50%;
         }
-
+        
         .menu-item:hover {
             color: #ffffff;
             transform: scale(1.1);
         }
-
-        /* Animazione Glow per il titolo */
+        
         @keyframes glow {
             from {
                 text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
@@ -88,25 +77,16 @@
             <li class="menu-item selected">Giochi</li>
             <li class="menu-item">Media</li>
             <li class="menu-item">Impostazioni</li>
-            <li class="menu-item">Profilo</li>
-            <li class="menu-item">Aiuto</li>
+            <li class="menu-item">Xbox Live</li>
         </ul>
     </div>
 
     <script>
-        // Seleziona tutti gli elementi del menu
         const menuItems = document.querySelectorAll('.menu-item');
-
-        // Aggiungi un event listener a ciascun elemento
         menuItems.forEach(item => {
             item.addEventListener('click', () => {
-                // Rimuovi la classe 'selected' da tutti gli elementi
                 menuItems.forEach(el => el.classList.remove('selected'));
-                // Aggiungi la classe 'selected' all'elemento cliccato
                 item.classList.add('selected');
-
-                // Puoi aggiungere ulteriori funzionalità qui, ad esempio la navigazione a una nuova pagina
-                alert(`Hai selezionato: ${item.textContent}`);
             });
         });
     </script>
