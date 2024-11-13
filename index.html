@@ -3,90 +3,214 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Xbox Menu</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <title>Schermata Iniziale Xbox</title>
     <style>
-        body {
+        /* Reset CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
             background-color: #0a0a0a;
-            color: #00ff00;
-            font-family: 'Orbitron', sans-serif;
-            height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+
+        /* Accensione */
+        #power-on {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: #0a0a0a;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
+            flex-direction: column;
+            animation: fadeOut 3s forwards;
+            animation-delay: 5s; /* Durata dell'accensione */
         }
-        
-        .container {
-            text-align: center;
+
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            100% { opacity: 0; visibility: hidden; }
         }
-        
-        .title {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            text-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00;
-            animation: glow 1.5s infinite alternate;
+
+        .glow-effect {
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(0,255,0,1) 0%, rgba(0,255,0,0) 70%);
+            animation: pulse 2s infinite;
         }
-        
-        .menu {
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+        }
+
+        /* Logo Xbox */
+        #logo {
+            width: 150px;
+            height: 150px;
+            background: url('https://upload.wikimedia.org/wikipedia/commons/4/43/Xbox_logo_2012.svg') no-repeat center center;
+            background-size: contain;
+            opacity: 0;
+            animation: logoAppear 2s forwards;
+            animation-delay: 1s;
+            filter: drop-shadow(0 0 20px #00ff00);
+        }
+
+        @keyframes logoAppear {
+            0% { opacity: 0; transform: scale(0.5); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* Menu Principale */
+        #menu {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             list-style: none;
-            padding: 0;
+            text-align: center;
+            opacity: 0;
+            animation: menuFadeIn 2s forwards;
+            animation-delay: 6s; /* Dopo l'accensione */
         }
-        
-        .menu-item {
-            font-size: 2rem;
-            padding: 10px 0;
-            cursor: pointer;
+
+        @keyframes menuFadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        #menu li {
+            margin: 20px 0;
             position: relative;
-            transition: color 0.3s, transform 0.3s;
+            cursor: pointer;
+            color: #00ff00;
+            font-size: 2em;
+            transition: transform 0.3s, color 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        
-        .menu-item::after {
-            content: '';
-            display: block;
-            width: 0%;
-            height: 2px;
-            background: #00ff00;
-            transition: width 0.3s;
-            margin: auto;
-        }
-        
-        .menu-item:hover::after, .menu-item.selected::after {
-            width: 50%;
-        }
-        
-        .menu-item:hover {
+
+        #menu li:hover {
             color: #ffffff;
             transform: scale(1.1);
         }
-        
-        @keyframes glow {
-            from {
-                text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
-            }
-            to {
-                text-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00;
-            }
+
+        /* Linea di selezione */
+        #menu li::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background-color: #00ff00;
+            left: 50%;
+            bottom: -10px;
+            transition: width 0.3s, left 0.3s;
+        }
+
+        #menu li:hover::after {
+            width: 50%;
+            left: 25%;
+        }
+
+        /* Icone */
+        .menu-icon {
+            width: 30px;
+            height: 30px;
+            margin-right: 15px;
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        .games-icon { background-image: url('https://img.icons8.com/ios-filled/50/00ff00/game-controller.png'); }
+        .media-icon { background-image: url('https://img.icons8.com/ios-filled/50/00ff00/media-player.png'); }
+        .settings-icon { background-image: url('https://img.icons8.com/ios-filled/50/00ff00/settings.png'); }
+        .live-icon { background-image: url('https://img.icons8.com/ios-filled/50/00ff00/globe.png'); }
+
+        /* Indicatori di stato */
+        #status {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            color: #00ff00;
+            font-size: 0.8em;
+            display: flex;
+            align-items: center;
+        }
+
+        #status .dot {
+            width: 10px;
+            height: 10px;
+            background-color: #00ff00;
+            border-radius: 50%;
+            margin-right: 5px;
+            animation: pulseStatus 2s infinite;
+        }
+
+        @keyframes pulseStatus {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1 class="title">Xbox</h1>
-        <ul class="menu">
-            <li class="menu-item selected">Giochi</li>
-            <li class="menu-item">Media</li>
-            <li class="menu-item">Impostazioni</li>
-            <li class="menu-item">Xbox Live</li>
-        </ul>
+
+    <!-- Sequenza di Accensione -->
+    <div id="power-on">
+        <div class="glow-effect"></div>
+        <div id="logo"></div>
     </div>
 
+    <!-- Menu Principale -->
+    <ul id="menu">
+        <li>
+            <div class="menu-icon games-icon"></div>
+            Giochi
+        </li>
+        <li>
+            <div class="menu-icon media-icon"></div>
+            Media
+        </li>
+        <li>
+            <div class="menu-icon settings-icon"></div>
+            Impostazioni
+        </li>
+        <li>
+            <div class="menu-icon live-icon"></div>
+            Xbox Live
+        </li>
+    </ul>
+
+    <!-- Indicatori di Stato -->
+    <div id="status">
+        <div class="dot"></div>
+        Connessione
+    </div>
+
+    <!-- Suono di accensione -->
+    <audio id="power-sound" src="https://www.soundjay.com/buttons/sounds/button-16.mp3" preload="auto"></audio>
+
     <script>
-        const menuItems = document.querySelectorAll('.menu-item');
+        // Riproduce il suono di accensione
+        window.addEventListener('load', () => {
+            const powerSound = document.getElementById('power-sound');
+            powerSound.play();
+        });
+
+        // Gestione delle selezioni del menu (esempio di interattività)
+        const menuItems = document.querySelectorAll('#menu li');
         menuItems.forEach(item => {
             item.addEventListener('click', () => {
-                menuItems.forEach(el => el.classList.remove('selected'));
+                menuItems.forEach(i => i.classList.remove('selected'));
                 item.classList.add('selected');
+                // Puoi aggiungere ulteriori azioni qui, come navigare a una nuova pagina
             });
         });
     </script>
